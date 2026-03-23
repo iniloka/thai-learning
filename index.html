@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>泰語全方位學習系統 7.8 (終極講義版)</title>
+    <title>泰語全方位學習系統 7.8</title>
     <style>
         :root { --primary: #2980b9; --secondary: #e74c3c; --bg: #f4f7f6; --text: #333; --light-bg: #ecf0f1; --success: #27ae60; --danger: #c0392b; --warning: #f39c12; }
         body { font-family: 'Segoe UI', 'Leelawadee UI', Tahoma, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; overflow-x: hidden; }
@@ -123,7 +123,6 @@
     </div>
 
     <script>
-        // --- 完整資料庫 (1-15單元) ---
         const unitData = {
             "單元一": [
                 { thai: "ตา", zh: "眼睛/外祖父", roman: "dtaa" }, { thai: "ปี", zh: "年/歲", roman: "bpee" },
@@ -211,7 +210,7 @@
                 { thai: "เบื่อ", zh: "厭煩", roman: "buea" }, { thai: "บัว", zh: "荷花", roman: "bua" },
                 { thai: "ซาลาเปา", zh: "包子", roman: "saa-laa-bpao" }, { thai: "มิน่าเล่า", zh: "怪不得", roman: "mi-naa-lao" },
                 { thai: "เชื่อใจ", zh: "相信", roman: "chuea-jai" }, { thai: "แน่ใจ", zh: "肯定", roman: "nae-jai" },
-                { thai: "เวลา", zh: "時間", roman: "wee-laa" }, { thai: "เมื่อตะกี้", zh: "剛才", roman: "muea-dta-gee" },
+                { thai: "เวลา", zh: "時間", roman: "wee-laa" }, { thai: "เมื่อตะกี้",หยิบ", zh: "剛才", roman: "muea-dta-gee" },
                 { thai: "นาฬิกาข้อมือ", zh: "手表", roman: "naa-li-gaa-kho-muee" }
             ],
             "單元九": [
@@ -282,8 +281,7 @@
                 { thai: "ลืม", zh: "忘記", roman: "luem" }, { thai: "กระเป๋า", zh: "拎包、袋子", roman: "gra-bpao" },
                 { thai: "ทบทวน", zh: "復習", roman: "thop-thuan" }, { thai: "แตงกวา", zh: "黃瓜", roman: "dtaeng-gwaa" },
                 { thai: "มะเขือเทศ", zh: "西紅柿", roman: "ma-khuea-thet" }, { thai: "ประเทศ", zh: "國家", roman: "bpra-thet" },
-                { thai: "มันฝรั่ง", zh: "土豆", roman: "man-fa-rang" }, { thai: "ฝรั่ง", zh: "番石榴/西方人", roman: "fa-rang" },
-                { thai: "หอสมุด", zh: "圖書館", roman: "ho-sa-mut" }
+                { thai: "มันฝรั่ง", zh: "土豆", roman: "man-fa-rang" }, { thai: "ฝรั่ง", zh: "番石榴/西方人", roman: "fa-rang" }
             ],
             "單元十三": [
                 { thai: "ครอบครัว", zh: "家庭", roman: "khrop-khrua" }, { thai: "นาน", zh: "久", roman: "naan" },
@@ -293,7 +291,7 @@
                 { thai: "กันยายน", zh: "九月份", roman: "gan-yaa-yon" }, { thai: "เที่ยว", zh: "旅遊", roman: "thiao" },
                 { thai: "ห้องนอน", zh: "臥室", roman: "hong-non" }, { thai: "ห้องครัว", zh: "廚房", roman: "hong-khrua" },
                 { thai: "ตลาด", zh: "市場", roman: "dta-laat" }, { thai: "บ้าน", zh: "家", roman: "baan" },
-                { thai: "แห่ง", zh: "所，量詞", roman: "haeng" }, { thai: "ห้าง", zh: "商場", roman: "haang" },
+                { thai: "แห่ง", zh: "所/量詞", roman: "haeng" }, { thai: "ห้าง", zh: "商場", roman: "haang" },
                 { thai: "เดี๋ยวนี้", zh: "一會兒", roman: "diao-nee" }, { thai: "ผลไม้", zh: "水果", roman: "phon-la-mai" },
                 { thai: "สัปดาห์หน้า", zh: "下周", roman: "sap-daa-naa" }, { thai: "พรุ่งนี้", zh: "明天", roman: "phrung-nee" },
                 { thai: "ใหม่", zh: "新的", roman: "mai" }, { thai: "เทอม", zh: "學期", roman: "thoem" },
@@ -310,17 +308,12 @@
                 { thai: "แน่นอน", zh: "肯定、當然", roman: "nae-non" }, { thai: "ฝาก", zh: "托付", roman: "faak" },
                 { thai: "ความระลึกถึง", zh: "想念", roman: "khwaam-ra-luek-thueng" }, { thai: "ถึง", zh: "到", roman: "thueng" },
                 { thai: "ด้วย", zh: "也", roman: "duai" }, { thai: "รู้สึก", zh: "感覺、覺得", roman: "ruu-suek" },
-                { thai: "หิว", zh: "餓", roman: "hiw" }, { thai: "หิวน้ำ", zh: "口渴", roman: "hiw-nam" },
-                { thai: "ผัด", zh: "炒", roman: "phat" }, { thai: "กะเพรา", zh: "金不換", roman: "ga-phrao" },
-                { thai: "หมู", zh: "豬、豬肉", roman: "muu" }, { thai: "ที่", zh: "份", roman: "thee" },
-                { thai: "เอา", zh: "要", roman: "ao" }, { thai: "ราดหน้าเส้นใหญ่", zh: "濕炒河粉", roman: "raat-naa-sen-yai" },
-                { thai: "กุ้ง", zh: "蝦", roman: "gung" }, { thai: "ช่วย", zh: "幫助、幫忙", roman: "chuai" },
-                { thai: "ส่ง", zh: "遞", roman: "song" }, { thai: "น้ำปลา", zh: "魚露", roman: "nam-bplaa" },
-                { thai: "หน่อย", zh: "一下", roman: "noi" }, { thai: "ถือ", zh: "提、拎", roman: "thuee" },
-                { thai: "หยิบ", zh: "拿、拾起", roman: "yip" }, { thai: "จด", zh: "記錄", roman: "jot" },
-                { thai: "เงิน", zh: "錢", roman: "ngoen" }, { thai: "บาท", zh: "泰銖", roman: "baat" },
-                { thai: "จดหมาย", zh: "信件", roman: "jot-maai" }, { thai: "เขียน", zh: "寫", roman: "khian" },
-                { thai: "เป็นห่วง", zh: "擔心", roman: "bpen-huang" }, { thai: "ข้าวผัด", zh: "炒飯", roman: "khao-phat" }
+                { thai: "หิวน้ำ", zh: "口渴", roman: "hiw-nam" }, { thai: "กะเพรา", zh: "金不換", roman: "ga-phrao" },
+                { thai: "ที่", zh: "份", roman: "thee" }, { thai: "ราดหน้าเส้นใหญ่", zh: "濕炒河粉", roman: "raat-naa-sen-yai" },
+                { thai: "ช่วย", zh: "幫助、幫忙", roman: "chuai" }, { thai: "น้ำปลา", zh: "魚露", roman: "nam-bplaa" },
+                { thai: "ถือ", zh: "提、拎", roman: "thuee" }, { thai: "จด", zh: "記錄", roman: "jot" },
+                { thai: "บาท", zh: "泰銖", roman: "baat" }, { thai: "เขียน", zh: "寫", roman: "khian" },
+                { thai: "ข้าวผัด", zh: "炒飯", roman: "khao-phat" }
             ],
             "單元十五": [
                 { thai: "เป็นอะไรไป", zh: "怎麼了", roman: "bpen-a-rai-bpai" }, { thai: "มั่ง/บ้าง", zh: "一些", roman: "mang/baang" },
@@ -331,7 +324,7 @@
                 { thai: "ออก", zh: "出", roman: "ok" }, { thai: "กี่โมง", zh: "幾點", roman: "gee-mong" },
                 { thai: "นาที", zh: "分鐘", roman: "naa-thee" }, { thai: "ชั่ง", zh: "斤", roman: "chang" },
                 { thai: "รวม", zh: "包括", roman: "ruam" }, { thai: "ตาม", zh: "跟著", roman: "dtaam" },
-                { thai: "พร้อม", zh: "齊；準備好", roman: "phrom" }, { thai: "แล้วค่อย", zh: "然後再", roman: "laeo-khoi" },
+                { thai: "พร้อม", zh: "齊/準備好", roman: "phrom" }, { thai: "แล้วค่อย", zh: "然後再", roman: "laeo-khoi" },
                 { thai: "ก่อน", zh: "先", roman: "gon" }, { thai: "สิ/ซิ", zh: "語氣詞(表祈使)", roman: "si" },
                 { thai: "นิด", zh: "一點", roman: "nit" }, { thai: "ดัง", zh: "大聲的、響亮的", roman: "dang" },
                 { thai: "แปล", zh: "翻譯", roman: "bplae" }, { thai: "หมด", zh: "沒、光、盡", roman: "mot" },
@@ -341,7 +334,7 @@
                 { thai: "สาย", zh: "遲", roman: "saai" }, { thai: "หาหมอ", zh: "看病", roman: "haa-mo" },
                 { thai: "หมอ", zh: "醫生", roman: "mo" }, { thai: "ทีหน้าทีหลัง", zh: "今後、以後", roman: "thee-naa-thee-lang" },
                 { thai: "โรงพยาบาล", zh: "醫院", roman: "rong-pha-yaa-baan" }, { thai: "ออกเสียง", zh: "發音", roman: "ok-siang" },
-                { thai: "เชิญ", zh: "請", roman: "choen" }, { thai: "ดี", zh: "很", roman: "dee" },
+                { thai: "เชิญ", zh: "請", roman: "choen" }, { thai: "ดี", zh: "很(放在形容詞後)", roman: "dee" },
                 { thai: "ชัด", zh: "清楚", roman: "chat" }, { thai: "ประโยค", zh: "句子", roman: "bpra-yok" },
                 { thai: "คล่อง", zh: "流利", roman: "khlong" }, { thai: "ที", zh: "次", roman: "thee" },
                 { thai: "แต่งประโยค", zh: "造句", roman: "dtaeng-bpra-yok" }, { thai: "ถูกต้อง", zh: "正確", roman: "thuuk-dtong" },
@@ -455,6 +448,9 @@
             let isCorrect = (input === ans);
             if (!isCorrect && spellQType === 'thai' && spellCurrent.zh.includes('/')) {
                 isCorrect = spellCurrent.zh.split('/').map(s => s.trim()).includes(input);
+            }
+            if (!isCorrect && spellQType === 'thai' && spellCurrent.zh.includes('、')) {
+                isCorrect = spellCurrent.zh.split('、').map(s => s.trim()).includes(input);
             }
             const fb = document.getElementById('feedback');
             
