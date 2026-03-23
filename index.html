@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>泰語全方位學習系統 7.9.1</title>
+    <title>泰語學習 App 7.9.2</title>
     <style>
         :root { --primary: #2980b9; --secondary: #e74c3c; --bg: #f4f7f6; --text: #333; --light-bg: #ecf0f1; --success: #27ae60; --danger: #c0392b; --warning: #f39c12; }
         body { font-family: 'Segoe UI', 'Leelawadee UI', Tahoma, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; overflow-x: hidden; }
         header { background: white; padding: 10px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { font-size: 1.5em; margin: 5px 0; }
         .tabs { display: flex; overflow-x: auto; white-space: nowrap; background: #fff; padding: 5px 10px; border-bottom: 2px solid #ddd; gap: 8px; -webkit-overflow-scrolling: touch; }
         .tabs::-webkit-scrollbar { display: none; }
         .tab-btn { flex: 0 0 auto; background: var(--light-bg); border: none; font-size: 0.95em; padding: 10px 18px; cursor: pointer; border-radius: 20px; transition: 0.3s; font-weight: bold; }
@@ -19,7 +18,7 @@
         .quiz-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: inline-block; width: 100%; box-sizing: border-box; max-width: 550px; }
         .score-board { background: #fff8e1; border: 2px solid #f1c40f; padding: 8px; border-radius: 8px; margin-bottom: 15px; font-weight: bold; font-size: 0.9em; color: #d35400; }
         .scope-toggles { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-        .scope-label { background: white; border: 1px solid #ccc; padding: 4px 10px; border-radius: 15px; font-size: 0.85em; cursor: pointer; color: #555; display: inline-block; }
+        .scope-label { background: white; border: 1px solid #ccc; padding: 4px 10px; border-radius: 15px; font-size: 0.85em; cursor: pointer; color: #555; }
         .scope-label.active { background: var(--primary); color: white; border-color: var(--primary); font-weight: bold; }
         .question { font-size: 2.2em; color: var(--primary); font-weight: bold; }
         input[type="text"] { font-size: 1.1em; padding: 12px; width: 85%; border: 2px solid #ddd; border-radius: 8px; text-align: center; margin-bottom: 10px; -webkit-appearance: none; }
@@ -28,18 +27,15 @@
         .writing-layout { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 10px; }
         canvas { background: white; border: 2px dashed #bbb; border-radius: 8px; cursor: crosshair; touch-action: none; width: 100%; max-width: 350px; height: auto; aspect-ratio: 1 / 1; }
         .tutorial-card { background: white; padding: 15px; border-radius: 12px; width: 100%; max-width: 350px; box-sizing: border-box; }
-        .huge-thai { font-size: 5em; color: var(--primary); }
         .mistake-grid, .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
-        .vocab-item, .mistake-item { background: white; padding: 10px; border-radius: 8px; font-size: 0.9em; flex-direction: column; }
         .speak-btn { background: #ecf0f1; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.1em; }
-        table { width: 100%; font-size: 0.9em; }
+        table { width: 100%; font-size: 0.9em; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🇹🇭 泰語全方位學習系統</h1>
-    </header>
+    <header><h1>🇹🇭 泰語全方位學習系統</h1></header>
 
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('vocab-quiz')">📝 拼寫測驗</button>
@@ -52,19 +48,17 @@
 
     <div id="vocab-quiz" class="content-section active">
         <div class="quiz-card">
-            <div class="quiz-scope-box" style="background: var(--light-bg); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left;">
-                <div style="font-weight: bold; color: var(--primary); margin-bottom: 10px; font-size: 1.1em;">⚙️ 範圍 (點擊數字切換)：</div>
+            <div class="quiz-scope-box" style="text-align:left; background:var(--light-bg); padding:10px; border-radius:8px; margin-bottom:15px;">
+                <div style="font-weight:bold; margin-bottom:5px;">⚙️ 範圍：</div>
                 <div class="scope-toggles" id="spell-scope-toggles"></div>
             </div>
-            <div class="score-board">
-                🏆 紀錄： <span style="color:var(--success)">對 <span id="spell-correct">0</span></span> | <span style="color:var(--danger)">錯 <span id="spell-wrong">0</span></span>
-            </div>
-            <div class="question-container" style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
-                <div id="quiz-question" class="question" style="margin-right: 15px;">載入中...</div>
+            <div class="score-board">🏆 紀錄： <span style="color:var(--success)">對 <span id="spell-correct">0</span></span> | <span style="color:var(--danger)">錯 <span id="spell-wrong">0</span></span></div>
+            <div style="display:flex; justify-content:center; align-items:center; margin-bottom:10px;">
+                <div id="quiz-question" class="question" style="margin-right:10px;">載入中...</div>
                 <button class="speak-btn" onclick="speakQuizWord()">🔊</button>
             </div>
-            <p id="quiz-hint" style="color: #7f8c8d; font-size:0.85em;"></p>
-            <input type="text" id="quiz-input" placeholder="請輸入答案" onkeypress="handleEnter(event)">
+            <p id="quiz-hint" style="color:#7f8c8d; font-size:0.85em;"></p>
+            <input type="text" id="quiz-input" placeholder="輸入答案" onkeypress="handleEnter(event)">
             <br>
             <button class="action-btn" onclick="checkAnswer()">確認答案</button>
             <button class="action-btn" style="background:#95a5a6;" onclick="nextQuestion()">跳過</button>
@@ -74,44 +68,41 @@
 
     <div id="listening-quiz" class="content-section">
         <div class="quiz-card">
-            <div class="quiz-scope-box" style="background: var(--light-bg); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left;">
-                <div style="font-weight: bold; color: var(--primary); margin-bottom: 10px; font-size: 1.1em;">⚙️ 聽力範圍設定：</div>
+            <div class="quiz-scope-box" style="text-align:left; background:var(--light-bg); padding:10px; border-radius:8px; margin-bottom:15px;">
+                <div style="font-weight:bold; margin-bottom:5px;">⚙️ 範圍：</div>
                 <div class="scope-toggles" id="listen-scope-toggles"></div>
             </div>
-            <div class="score-board">
-                🎯 紀錄： <span style="color:var(--success)">對 <span id="listen-correct">0</span></span> | <span style="color:var(--danger)">錯 <span id="listen-wrong">0</span></span>
-            </div>
-            <button class="speak-btn" style="width: 70px; height: 70px; font-size: 2em; background: var(--primary); color: white;" onclick="playListeningAudio()">🔊</button>
+            <div class="score-board">🎯 紀錄： <span style="color:var(--success)">對 <span id="listen-correct">0</span></span> | <span style="color:var(--danger)">錯 <span id="listen-wrong">0</span></span></div>
+            <button class="speak-btn" style="width:70px; height:70px; font-size:2em; background:var(--primary); color:white;" onclick="playListeningAudio()">🔊</button>
             <div id="listening-options" class="mcq-options" style="margin-top:15px;"></div>
             <div id="listening-feedback" class="feedback"></div>
-            <button class="action-btn" style="background: #34495e;" onclick="nextListeningQuestion()">⏭️ 換題</button>
+            <button class="action-btn" style="background:#34495e;" onclick="nextListeningQuestion()">⏭️ 換題</button>
         </div>
     </div>
 
     <div id="mistakes-book" class="content-section">
         <h3>📖 專屬自動錯題本</h3>
-        <p style="color: #666; font-size: 0.85em;">連續答對 5 次後將自動移除</p>
         <div id="mistake-display-area"></div>
     </div>
 
     <div id="writing" class="content-section">
-        <div class="tools" style="margin-bottom: 10px;">
-            <button class="action-btn" style="background:#27ae60; padding:8px 12px;" onclick="nextWritingPrompt()">✨ 換字</button>
-            <button class="action-btn" style="background:#f39c12; padding:8px 12px;" onclick="toggleTraceMode()" id="trace-btn">👁️ 底字:開</button>
-            <button class="action-btn" style="padding:8px 12px;" onclick="clearCanvas()">🗑️ 清除</button>
+        <div class="tools">
+            <button class="action-btn" style="background:#27ae60;" onclick="nextWritingPrompt()">✨ 換字</button>
+            <button class="action-btn" style="background:#f39c12;" onclick="toggleTraceMode()" id="trace-btn">👁️ 底字:開</button>
+            <button class="action-btn" onclick="clearCanvas()">🗑️ 清除</button>
         </div>
         <div class="writing-layout">
             <canvas id="drawingBoard" width="350" height="350"></canvas>
             <div class="tutorial-card">
-                <div class="huge-thai" id="tutorial-thai">ก</div>
+                <div id="tutorial-thai" style="font-size:5em; color:var(--primary);">ก</div>
                 <div id="tutorial-zh">gai</div>
-                <button class="speak-btn" style="margin-top: 10px;" onclick="speakThai(document.getElementById('tutorial-thai').innerText)">🔊</button>
+                <button class="speak-btn" style="margin-top:10px;" onclick="speakThai(document.getElementById('tutorial-thai').innerText)">🔊</button>
             </div>
         </div>
     </div>
 
     <div id="units" class="content-section">
-        <div class="unit-buttons" id="unit-btn-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px;"></div>
+        <div class="unit-buttons" id="unit-btn-container" style="display:flex; flex-wrap:wrap; justify-content:center; gap:5px; margin-bottom:15px;"></div>
         <div class="vocab-grid" id="unit-vocab-display"></div>
     </div>
 
@@ -124,192 +115,71 @@
 
     <script>
         const unitData = {
-            "單元一": [ { thai: "ตา", zh: "眼睛/外祖父", roman: "dtaa" }, { thai: "ปี", zh: "年/歲", roman: "bpee" }, { thai: "ดู", zh: "看", roman: "doo" }, { thai: "อา", zh: "叔叔/姑姑", roman: "aa" }, { thai: "ตี", zh: "打/敲擊", roman: "dtee" }, { thai: "ดี", zh: "好", roman: "dee" }, { thai: "ปู", zh: "螃蟹", roman: "bpoo" }, { thai: "กะปิ", zh: "蝦醬", roman: "ga-bpi" }, { thai: "ตะ平", zh: "釘子", roman: "dta-bpoo" }, { thai: "กา", zh: "烏鴉", roman: "gaa" }, { thai: "ปา", zh: "投/擲", roman: "bpaa" }, { thai: "จะ", zh: "將要/要", roman: "ja" }, { thai: "กะ", zh: "估計", roman: "ga" }, { thai: "ดุ", zh: "凶/責怪", roman: "du" } ],
-            "單元二": [ { thai: "จำ", zh: "記", roman: "jam" }, { thai: "ได้", zh: "得/可以", roman: "dai" }, { thai: "ไป", zh: "去", roman: "bpai" }, { thai: "เตะ", zh: "踢", roman: "dte" }, { thai: "ดำ", zh: "黑", roman: "dam" }, { thai: "ตำ", zh: "搗/舂", roman: "dtam" }, { thai: "ดีใจ", zh: "高興", roman: "dee-jai" }, { thai: "ไอ", zh: "咳嗽", roman: "ai" }, { thai: "เป็น", zh: "生病/是", roman: "bpen" }, { thai: "เอา", zh: "拿", roman: "ao" }, { thai: "แกะ", zh: "綿羊", roman: "gae" }, { thai: "ใจ", zh: "心", roman: "jai" }, { thai: "เบา", zh: "輕", roman: "bao" }, { thai: "เกาะ", zh: "島", roman: "go" }, { thai: "เตา", zh: "爐灶", roman: "dtao" }, { thai: "เดา", zh: "猜/猜測", roman: "dao" } ],
-            "單元三": [ { thai: "โต๊ะ", zh: "桌子", roman: "dto" }, { thai: "ป้า", zh: "伯母/大娘", roman: "bpaa" }, { thai: "ไก่", zh: "雞", roman: "gai" }, { thai: "โกโก้", zh: "可可", roman: "go-go" }, { thai: "กี่", zh: "幾", roman: "gee" }, { thai: "แก่", zh: "老的/年長的/給", roman: "gae" }, { thai: "เป่า", zh: "吹", roman: "bpao" }, { thai: "เก้าอี้", zh: "椅子", roman: "gao-ee" }, { thai: "得", zh: "得到/可以", roman: "dai" }, { thai: "เก้า", zh: "九", roman: "gao" }, { thai: "ปู่", zh: "祖父", roman: "bpoo" }, { thai: "เก่า", zh: "舊的", roman: "gao" }, { thai: "ป่า", zh: "樹林", roman: "bpaa" }, { thai: "ปี่", zh: "笛子", roman: "bpee" } ],
-            "單元四": [ { thai: "ไข่ไก่", zh: "雞蛋", roman: "khai-gai" }, { thai: "สี", zh: "顏色", roman: "see" }, { thai: "สี่", zh: "四", roman: "see" }, { thai: "หอ", zh: "樓/樓房", roman: "ho" }, { thai: "เขา", zh: "他/她", roman: "khao" }, { thai: "ขา", zh: "腿", roman: "khaa" }, { thai: "ให้", zh: "給", roman: "hai" }, { thai: "เข้าใจ", zh: "明白", roman: "khao-jai" }, { thai: "ถ้า", zh: "如果", roman: "thaa" }, { thai: "ถู", zh: "擦/抹", roman: "thuu" }, { thai: "ห้า", zh: "五", roman: "haa" }, { thai: "หา", zh: "找", roman: "haa" }, { thai: "ไผ่", zh: "竹子", roman: "phai" }, { thai: "เข้า", zh: "進/進入", roman: "khao" }, { thai: "ผ้า", zh: "布", roman: "phaa" }, { thai: "หู", zh: "耳朵", roman: "hoo" }, { thai: "ใส่", zh: "穿/戴", roman: "sai" }, { thai: "ขอ", zh: "請求", roman: "kho" }, { thai: "ขู่", zh: "威脅", roman: "khuu" }, { thai: "ฝา", zh: "蓋子", roman: "faa" } ],
-            "單元五": [ { thai: "คือ", zh: "是", roman: "kuee" }, { thai: "ชื่อ", zh: "名字/名叫", roman: "chuee" }, { thai: "ไฟฟ้า", zh: "電", roman: "fai-faa" }, { thai: "ซื้อ", zh: "買", roman: "suee" }, { thai: "ใบชา", zh: "茶葉", roman: "bai-chaa" }, { thai: "พี่", zh: "哥哥/姐姐", roman: "phee" }, { thai: "พ่อ", zh: "爸爸", roman: "pho" }, { thai: "คะ", zh: "語尾助詞", roman: "kha" }, { thai: "เธอ", zh: "她/你", roman: "thoe" }, { thai: "ใช้", zh: "使用/用", roman: "chai" }, { thai: "ภาษา", zh: "語言", roman: "phaa-saa" }, { thai: "ภาษาไทย", zh: "泰語", roman: "phaa-saa-thai" }, { thai: "ฟ้า", zh: "天空/藍色", roman: "faa" }, { thai: "คู่", zh: "對/雙", roman: "khuu" }, { thai: "ทำ", zh: "做", roman: "tham" }, { thai: "ใช่", zh: "是/是的", roman: "chai" }, { thai: "แพะ", zh: "山羊", roman: "phae" }, { thai: "คำ", zh: "字/詞", roman: "kham" } ],
-            "單元六": [ { thai: "ขา", zh: "腿", roman: "khaa" }, { thai: "ฝา", zh: "蓋子", roman: "faa" }, { thai: "หา", zh: "找", roman: "haa" }, { thai: "ผี", zh: "鬼", roman: "phee" }, { thai: "สี", zh: "顏色", roman: "see" }, { thai: "หู", zh: "耳朵", roman: "hoo" }, { thai: "ไข้", zh: "發燒", roman: "khai" }, { thai: "ใส่", zh: "穿/戴/放", roman: "sai" }, { thai: "ให้", zh: "給", roman: "hai" }, { thai: "ผ้า", zh: "布", roman: "phaa" }, { thai: "สู้", zh: "鬥/拼搏", roman: "soo" }, { thai: "ห้า", zh: "五", roman: "haa" } ],
-            "單元七": [ { thai: "มา", zh: "來", roman: "maa" }, { thai: "มี", zh: "有", roman: "mee" }, { thai: "มือ", zh: "手", roman: "muee" }, { thai: "ทำ", zh: "做", roman: "tham" }, { thai: "รำ", zh: "舞蹈", roman: "ram" }, { thai: "คำ", zh: "詞", roman: "kham" }, { thai: "จำ", zh: "記", roman: "jam" }, { thai: "นำ", zh: "帶領", roman: "nam" }, { thai: "ชู", zh: "舉起", roman: "choo" }, { thai: "ซื้อ", zh: "買", roman: "suee" }, { thai: "ไม้", zh: "木頭", roman: "mai" }, { thai: "เช้า", zh: "早晨", roman: "chao" } ],
-            "單元八": [ { thai: "เงา", zh: "影子", roman: "ngao" }, { thai: "เรา", zh: "我們", roman: "rao" }, { thai: "เมา", zh: "醉", roman: "mao" }, { thai: "ช้า", zh: "慢", roman: "chaa" }, { thai: "ค้า", zh: "貿易/賣", roman: "khaa" }, { thai: "น้า", zh: "阿姨/舅舅", roman: "naa" }, { thai: "น้ำ", zh: "水", roman: "nam" }, { thai: "ฟ้า", zh: "天空", roman: "faa" }, { thai: "รู้", zh: "知道", roman: "roo" }, { thai: "ยา", zh: "藥", roman: "yaa" }, { thai: "นา", zh: "田地", roman: "naa" }, { thai: "ลา", zh: "驢子", roman: "laa" } ],
-            "單元九": [ { thai: "ทำไม", zh: "為什麼", roman: "tham-mai" }, { thai: "ทีวี", zh: "電視", roman: "thee-wee" }, { thai: "นาที", zh: "分鐘", roman: "naa-thee" }, { thai: "ทะเล", zh: "海", roman: "tha-lee" }, { thai: "時間", thai: "เวลา", roman: "wee-laa" }, { thai: "ราคา", zh: "價格", roman: "raa-khaa" }, { thai: "งา", zh: "象牙", roman: "ngaa" }, { thai: "ซีดี", zh: "CD", roman: "see-dee" }, { thai: "ชี", zh: "尼姑", roman: "chee" }, { thai: "ริ", zh: "開始/創", roman: "ri" } ],
-            "單元十": [ { thai: "พอ", zh: "夠", roman: "pho" }, { thai: "รอ", zh: "等", roman: "ro" }, { thai: "ง้อ", zh: "求和", roman: "ngo" }, { thai: "ย่อ", zh: "縮寫", roman: "yo" }, { thai: "ท้อ", zh: "氣餒/退縮", roman: "tho" }, { thai: "แท้", zh: "真/純正", roman: "thae" }, { thai: "แวะ", zh: "順道拜訪", roman: "wae" }, { thai: "เละ", zh: "爛/碎", roman: "le" }, { thai: "แนะ", zh: "建議", roman: "nae" }, { thai: "แพะ", zh: "山羊", roman: "phae" }, { thai: "พ่อ", zh: "爸爸", roman: "pho" }, { thai: "แม่", zh: "媽媽", roman: "mae" } ],
-            "單元十一": [ { thai: "ไหม", zh: "嗎", roman: "mai" }, { thai: "อยู่", zh: "在", roman: "yuu" }, { thai: "กับข้าว", zh: "飯菜", roman: "gap-khao" }, { thai: "อร่อย", zh: "美味的", roman: "a-roi" }, { thai: "มาก", zh: "很", roman: "maak" }, { thai: "ตั้งใจ", zh: "打算", roman: "dtang-jai" }, { thai: "นั้น", zh: "那", roman: "nan" }, { thai: "ส่วน", zh: "至於", roman: "suan" }, { thai: "ล่ะ", zh: "呢", roman: "la" }, { thai: "โน้น", zh: "那", roman: "non" }, { thai: "หนู", zh: "我/你", roman: "nuu" }, { thai: "ไหน", zh: "哪裡", roman: "nai" }, { thai: "ญี่ปุ่น", zh: "日本", roman: "yip-bpun" }, { thai: "เวียดนาม", zh: "越南", roman: "wiat-naam" }, { thai: "อินโดนีเซีย", zh: "印尼", roman: "in-do-nee-sia" }, { thai: "เกาหลี", zh: "韓國", roman: "gao-lee" }, { thai: "ไหหลำ", zh: "海南", roman: "hai-lam" }, { thai: "อาหรับ", zh: "阿拉伯", roman: "aa-rap" }, { thai: "เสฉวน", zh: "四川", roman: "see-chuan" }, { thai: "廣西", thai: "กวางสี", roman: "gwaang-see" }, { thai: "เชียงใหม่", zh: "清邁", roman: "chiang-mai" }, { thai: "廣州", thai: "กวางเจา", roman: "gwaang-jao" }, { thai: "หอสมุด", zh: "圖書館", roman: "ho-sa-mut" }, { thai: "ทาน", zh: "吃", roman: "thaan" }, { thai: "อากาศ", zh: "天氣", roman: "aa-gaat" }, { thai: "ผู้หญิง", zh: "女/女性", roman: "phuu-ying" }, { thai: "ปีหน้า", zh: "明年", roman: "bpee-naa" }, { thai: "วันนี้", zh: "今天", roman: "wan-nee" }, { thai: "อยาก", zh: "想", roman: "yaak" }, { thai: "เมื่อไร", zh: "什麼時候", roman: "muea-rai" }, { thai: "อ่าน", zh: "讀/看", roman: "aan" }, { thai: "อย่า", zh: "別/勿", roman: "yaa" }, { thai: "หนัง", zh: "電影", roman: "nang" }, { thai: "หนังสือ", zh: "書", roman: "nang-suee" }, { thai: "สอน", zh: "教", roman: "son" }, { thai: "โรงหนัง", zh: "電影院", roman: "rong-nang" }, { thai: "เท่าไร", zh: "多少", roman: "thao-rai" }, { thai: "การบ้าน", zh: "作業", roman: "gaan-baan" } ],
-            "單元十二": [ { thai: "เป็น", zh: "是", roman: "bpen" }, { thai: "ยังไง", zh: "怎樣", roman: "yang-ngai" }, { thai: "อย่างไร", zh: "怎樣", roman: "yaang-rai" }, { thai: "สบาย", zh: "舒適", roman: "sa-baai" }, { thai: "เรื่อย ๆ", zh: "就那樣", roman: "rueai-rueai" }, { thai: "งั้น ๆ", zh: "就那樣", roman: "ngan-ngan" }, { thai: "แหละ", zh: "語氣詞", roman: "lae" }, { thai: "但", thai: "แต่", roman: "dtae" }, { thai: "ใคร", zh: "誰", roman: "khrai" }, { thai: "ครู", zh: "老師", roman: "khruu" }, { thai: "เพื่อน", zh: "朋友", roman: "phuean" }, { thai: "เสีย", zh: "浪費/花費", roman: "sia" }, { thai: "จึง", zh: "所以/因此", roman: "jueng" }, { thai: "พยายาม", zh: "努力", roman: "pha-yaa-yaam" }, { thai: "ปากกา", zh: "鋼筆", roman: "bpaak-gaa" }, { thai: "ดินสอ", zh: "鉛筆", roman: "din-so" }, { thai: "เรียกว่า", zh: "稱作/叫做", roman: "riak-waa" }, { thai: "สมุด", zh: "本子", roman: "sa-mut" }, { thai: "忘記", thai: "ลืม", roman: "luem" }, { thai: "กระเป๋า", zh: "拎包/袋子", roman: "gra-bpao" }, { thai: "復習", thai: "ทบทวน", roman: "thop-thuan" }, { thai: "แตงกวา", zh: "黃瓜", roman: "dtaeng-gwaa" }, { thai: "มะเขือเทศ", zh: "西紅柿", roman: "ma-khuea-thet" }, { thai: "國家", thai: "ประเทศ", roman: "bpra-thet" }, { thai: "มันฝรั่ง", zh: "土豆", roman: "man-fa-rang" }, { thai: "ฝรั่ง", zh: "番石榴/西方人", roman: "fa-rang" } ],
-            "單元十三": [ { thai: "ครอบครัว", zh: "家庭", roman: "khrop-khrua" }, { thai: "นาน", zh: "久", roman: "naan" }, { thai: "เดือน", zh: "月份", roman: "duean" }, { thai: "下個月", thai: "เดือนหน้า", roman: "duean-naa" }, { thai: "ที่", zh: "在……地方", roman: "thee" }, { thai: "มหาวิทยาลัย", zh: "大學", roman: "ma-haa-wit-tha-yaa-lai" }, { thai: "廣東", thai: "กวางตุ้ง", roman: "gwaang-dtung" }, { thai: "自從", thai: "ตั้งแต่", roman: "dtang-dtae" }, { thai: "九月份", thai: "กันยายน", roman: "gan-yaa-yon" }, { thai: "旅遊", thai: "เที่ยว", roman: "thiao" }, { thai: "臥室", thai: "ห้องนอน", roman: "hong-non" }, { thai: "廚房", thai: "ห้องครัว", roman: "hong-khrua" }, { thai: "市場", thai: "ตลาด", roman: "dta-laat" }, { thai: "家", thai: "บ้าน", roman: "baan" }, { thai: "所/量詞", thai: "แห่ง", roman: "haeng" }, { thai: "商場", thai: "ห้าง", roman: "haang" }, { thai: "一會兒", thai: "เดี๋ยวนี้", roman: "diao-nee" }, { thai: "水果", thai: "ผลไม้", roman: "phon-la-mai" }, { thai: "下周", thai: "สัปดาห์หน้า", roman: "sap-daa-naa" }, { thai: "明天", thai: "พรุ่งนี้", roman: "phrung-nee" }, { thai: "新的", thai: "ใหม่", roman: "mai" }, { thai: "學期", thai: "เทอม", roman: "thoem" }, { thai: "開", thai: "เปิด", roman: "bpoet" }, { thai: "昨天", thai: "เมื่อวาน", roman: "muea-waan" }, { thai: "考試", thai: "สอบ", roman: "sop" } ],
-            "單元十四": [ { thai: "ของ", zh: "的(表所屬)", roman: "khong" }, { thai: "หรือ", zh: "或者", roman: "ruee" }, { thai: "อาจารย์", zh: "老師", roman: "aa-jaan" }, { thai: "幾乎", thai: "เกือบ", roman: "gueap" }, { thai: "回", thai: "กลับ", roman: "glap" }, { thai: "อาทิตย์", zh: "星期", roman: "aa-thit" }, { thai: "走路/旅行", thai: "เดินทาง", roman: "doen-thaang" }, { thai: "平安地", thai: "โดยปลอดภัย", roman: "doi-bplot-phai" }, { thai: "ขอ", zh: "要/請求", roman: "kho" }, { thai: "希望", thai: "ขอให้", roman: "kho-hai" }, { thai: "估計/想", thai: "คิดว่า", roman: "khit-waa" }, { thai: "再", thai: "อีก", roman: "eek" }, { thai: "當然", thai: "แน่นอน", roman: "nae-non" }, { thai: "托付", thai: "ฝาก", roman: "faak" }, { thai: "想念", thai: "ความระลึกถึง", roman: "khwaam-ra-luek-thueng" }, { thai: "到", thai: "ถึง", roman: "thueng" }, { thai: "也", thai: "ด้วย", roman: "duai" }, { thai: "覺得", thai: "รู้สึก", roman: "ruu-suek" }, { thai: "餓", thai: "หิว", roman: "hiw" }, { thai: "口渴", thai: "หิวน้ำ", roman: "hiw-nam" }, { thai: "炒", thai: "ผัด", roman: "phat" }, { thai: "金不換", thai: "กะเพรา", roman: "ga-phrao" }, { thai: "份", thai: "ที่", roman: "thee" }, { thai: "濕炒河粉", thai: "ราดหน้าเส้นใหญ่", roman: "raat-naa-sen-yai" }, { thai: "豬", thai: "หมู", roman: "muu" }, { thai: "蝦", thai: "กุ้ง", roman: "gung" }, { thai: "幫助", thai: "ช่วย", roman: "chuai" }, { thai: "送", thai: "ส่ง", roman: "song" }, { thai: "魚露", thai: "น้ำปลา", roman: "nam-bplaa" }, { thai: "一下", thai: "หน่อย", roman: "noi" }, { thai: "提/拎", thai: "ถือ", roman: "thuee" }, { thai: "拿", thai: "หยิบ", roman: "yip" }, { thai: "記錄", thai: "จด", roman: "jot" }, { thai: "錢", thai: "เงิน", roman: "ngoen" }, { thai: "泰銖", thai: "บาท", roman: "baat" }, { thai: "信件", thai: "จดหมาย", roman: "jot-maai" }, { thai: "寫", thai: "เขียน", roman: "khian" }, { thai: "擔心", thai: "เป็นห่วง", roman: "bpen-huang" }, { thai: "炒飯", thai: "ข้าวผัด", roman: "khao-phat" } ],
-            "單元十五": [ { thai: "怎麼了", thai: "เป็นอะไรไป", roman: "bpen-a-rai-bpai" }, { thai: "一些", thai: "มั่ง/บ้าง", roman: "mang/baang" }, { thai: "本(量詞)", thai: "เล่ม", roman: "lem" }, { thai: "緊挨", thai: "ติดกับ", roman: "dtit-gap" }, { thai: "住/休息", thai: "พัก", roman: "phak" }, { thai: "告訴", thai: "บอก", roman: "bok" }, { thai: "客氣", thai: "เกรงใจ", roman: "greeng-jai" }, { thai: "再過……", thai: "อีก", roman: "eek" }, { thai: "多點", thai: "กว่า", roman: "gwaa" }, { thai: "車", thai: "รถ", roman: "rot" }, { thai: "出", thai: "ออก", roman: "ok" }, { thai: "幾點", thai: "กี่โมง", roman: "gee-mong" }, { thai: "分鐘", thai: "นาที", roman: "naa-thee" }, { thai: "斤", thai: "ชั่ง", roman: "chang" }, { thai: "包括", thai: "รวม", roman: "ruam" }, { thai: "跟著", thai: "ตาม", roman: "dtaam" }, { thai: "齊/準備好", thai: "พร้อม", roman: "phrom" }, { thai: "然後再", thai: "แล้วค่อย", roman: "laeo-khoi" }, { thai: "先", thai: "ก่อน", roman: "gon" }, { thai: "語氣詞", thai: "สิ/ซิ", roman: "si" }, { thai: "一點", thai: "นิด", roman: "nit" }, { thai: "大聲", thai: "ดัง", roman: "dang" }, { thai: "翻譯", thai: "แปล", roman: "bplae" }, { thai: "沒/盡", thai: "หมด", roman: "mot" }, { thai: "還", thai: "ยัง", roman: "yang" }, { thai: "天", thai: "วัน", roman: "wan" }, { thai: "見面", thai: "พบกัน", roman: "phop-gan" }, { thai: "許可", thai: "อนุญาต", roman: "a-nu-yaat" }, { thai: "再次", thai: "ใหม่", roman: "mai" }, { thai: "順便", thai: "แวะ", roman: "wae" }, { thai: "遲", thai: "สาย", roman: "saai" }, { thai: "看病", thai: "หาหมอ", roman: "haa-mo" }, { thai: "醫生", thai: "หมอ", roman: "mo" }, { thai: "今後", thai: "ทีหน้าทีหลัง", roman: "thee-naa-thee-lang" }, { thai: "醫院", thai: "โรงพยาบาล", roman: "rong-pha-yaa-baan" }, { thai: "發音", thai: "ออกเสียง", roman: "ok-siang" }, { thai: "請", thai: "เชิญ", roman: "choen" }, { thai: "很", thai: "ดี", roman: "dee" }, { thai: "清楚", thai: "ชัด", roman: "chat" }, { thai: "句子", thai: "ประโยค", roman: "bpra-yok" }, { thai: "流利", thai: "คล่อง", roman: "khlong" }, { thai: "次", thai: "ที", roman: "thee" }, { thai: "造句", thai: "แต่งประโยค", roman: "dtaeng-bpra-yok" }, { thai: "正確", thai: "ถูกต้อง", roman: "thuuk-dtong" }, { thai: "錯誤", thai: "ผิด", roman: "phit" } ]
+            "單元一": [ {thai:"ตา",zh:"眼睛/外祖父",roman:"dtaa"},{thai:"ปี",zh:"年/歲",roman:"bpee"},{thai:"ดู",zh:"看",roman:"doo"},{thai:"อา",zh:"叔叔/姑姑",roman:"aa"},{thai:"ตี",zh:"打/敲擊",roman:"dtee"},{thai:"ดี",zh:"好",roman:"dee"},{thai:"ปู",zh:"螃蟹",roman:"bpoo"},{thai:"กะปิ",zh:"蝦醬",roman:"ga-bpi"},{thai:"ตะปู",zh:"釘子",roman:"dta-bpoo"},{thai:"กา",zh:"烏鴉",roman:"gaa"},{thai:"ปา",zh:"投/擲",roman:"bpaa"},{thai:"จะ",zh:"將要/要",roman:"ja"},{thai:"กะ",zh:"估計",roman:"ga"},{thai:"ดุ",zh:"凶/責怪",roman:"du"} ],
+            "單元二": [ {thai:"จำ",zh:"記",roman:"jam"},{thai:"得",zh:"得到/可以",roman:"dai"},{thai:"ไป",zh:"去",roman:"bpai"},{thai:"เตะ",zh:"踢",roman:"dte"},{thai:"ดำ",zh:"黑",roman:"dam"},{thai:"ตำ",zh:"搗/舂",roman:"dtam"},{thai:"ดีใจ",zh:"高興",roman:"dee-jai"},{thai:"ไอ",zh:"咳嗽",roman:"ai"},{thai:"เป็น",zh:"生病/是",roman:"bpen"},{thai:"เอา",zh:"拿",roman:"ao"},{thai:"แกะ",zh:"綿羊",roman:"gae"},{thai:"ใจ",zh:"心",roman:"jai"},{thai:"เบา",zh:"輕",roman:"bao"},{thai:"เกาะ",zh:"島",roman:"go"},{thai:"เตา",zh:"爐灶",roman:"dtao"},{thai:"เดา",zh:"猜/猜測",roman:"dao"} ],
+            "單元三": [ {thai:"โต๊ะ",zh:"桌子",roman:"dto"},{thai:"ป้า",zh:"伯母/大娘",roman:"bpaa"},{thai:"ไก่",zh:"雞",roman:"gai"},{thai:"โกโก้",zh:"可可",roman:"go-go"},{thai:"กี่",zh:"幾",roman:"gee"},{thai:"แก่",zh:"老的/年長的/給",roman:"gae"},{thai:"เป่า",zh:"吹",roman:"bpao"},{thai:"เก้า椅",zh:"椅子",roman:"gao-ee"},{thai:"ได้",zh:"得到/可以",roman:"dai"},{thai:"เก้า",zh:"九",roman:"gao"},{thai:"ปู่",zh:"祖父",roman:"bpoo"},{thai:"เก่า",zh:"舊的",roman:"gao"},{thai:"ป่า",zh:"樹林",roman:"bpaa"},{thai:"ปี่",zh:"笛子",roman:"bpee"} ],
+            "單元四": [ {thai:"ไข่ไก่",zh:"雞蛋",roman:"khai-gai"},{thai:"สี",zh:"顏色",roman:"see"},{thai:"สี่",zh:"四",roman:"see"},{thai:"หอ",zh:"樓/樓房",roman:"ho"},{thai:"เขา",zh:"他/她",roman:"khao"},{thai:"ขา",zh:"腿",roman:"khaa"},{thai:"ให้",zh:"給",roman:"hai"},{thai:"เข้าใจ",zh:"明白",roman:"khao-jai"},{thai:"ถ้า",zh:"如果",roman:"thaa"},{thai:"ถู",zh:"擦/抹",roman:"thuu"},{thai:"ห้า",zh:"五",roman:"haa"},{thai:"หา",zh:"找",roman:"haa"},{thai:"ไผ่",zh:"竹子",roman:"phai"},{thai:"เข้า",zh:"進/進入",roman:"khao"},{thai:"ผ้า",zh:"布",roman:"phaa"},{thai:"หู",zh:"耳朵",roman:"hoo"},{thai:"ใส่",zh:"穿/戴",roman:"sai"},{thai:"ขอ",zh:"請求",roman:"kho"},{thai:"ขู่",zh:"威脅",roman:"khuu"},{thai:"ฝา",zh:"蓋子",roman:"faa"} ],
+            "單元五": [ {thai:"คือ",zh:"是",roman:"kuee"},{thai:"ชื่อ",zh:"名字/名叫",roman:"chuee"},{thai:"ไฟฟ้า",zh:"電",roman:"fai-faa"},{thai:"ซื้อ",zh:"買",roman:"suee"},{thai:"ใบชา",zh:"茶葉",roman:"bai-chaa"},{thai:"พี่",zh:"哥哥/姐姐",roman: "phee"},{thai:"พ่อ",zh:"爸爸",roman:"pho"},{thai:"คะ",zh:"語尾助詞",roman:"kha"},{thai:"เธอ",zh:"她/你",roman:"thoe"},{thai:"ใช้",zh:"使用/用",roman:"chai"},{thai:"ภาษา",zh:"語言",roman:"phaa-saa"},{thai:"ภาษาไทย",zh:"泰語",roman:"phaa-saa-thai"},{thai:"ฟ้า",zh:"天空/藍色",roman:"faa"},{thai:"คู่",zh:"對/雙",roman:"khuu"},{thai:"ทำ",zh:"做",roman:"tham"},{thai:"ใช่",zh:"是/是的",roman:"chai"},{thai:"แพะ",zh:"山羊",roman:"phae"},{thai:"คำ",zh:"字/詞",roman:"kham"} ],
+            "單元六": [ {thai:"ขา",zh:"腿",roman:"khaa"},{thai:"ฝา",zh:"蓋子",roman:"faa"},{thai:"หา",zh:"找",roman:"haa"},{thai:"ผี",zh:"鬼",roman:"phee"},{thai:"สี",zh:"顏色",roman:"see"},{thai:"หู",zh:"耳朵",roman:"hoo"},{thai:"ไข้",zh:"發燒",roman:"khai"},{thai:"ใส่",zh:"穿/戴/放",roman:"sai"},{thai:"ให้",zh:"給",roman:"hai"},{thai:"ผ้า",zh:"布",roman:"phaa"},{thai:"สู้",zh:"鬥/拼搏",roman:"soo"},{thai:"ห้า",zh:"五",roman:"haa"} ],
+            "單元七": [ {thai:"มา",zh:"來",roman:"maa"},{thai:"มี",zh:"有",roman:"mee"},{thai:"มือ",zh:"手",roman:"muee"},{thai:"ทำ",zh:"做",roman:"tham"},{thai:"รำ",zh:"舞蹈",roman:"ram"},{thai:"คำ",zh:"詞",roman:"kham"},{thai:"จำ",zh:"記",roman:"jam"},{thai:"นำ",zh:"帶領",roman:"nam"},{thai:"ชู",zh:"舉起",roman:"choo"},{thai:"ซื้อ",zh:"買",roman:"suee"},{thai:"ไม้",zh:"木頭",roman:"mai"},{thai:"เช้า",zh:"早晨",roman:"chao"} ],
+            "單元八": [ {thai:"เงา",zh:"影子",roman:"ngao"},{thai:"เรา",zh:"我們",roman:"rao"},{thai:"เมา",zh:"醉",roman:"mao"},{thai:"ช้า",zh:"慢",roman:"chaa"},{thai:"ค้า",zh:"貿易/賣",roman:"khaa"},{thai:"น้า",zh:"阿姨/舅舅",roman:"naa"},{thai:"น้ำ",zh:"水",roman:"nam"},{thai:"ฟ้า",zh:"天空",roman:"faa"},{thai:"รู้",zh:"知道",roman:"roo"},{thai:"ยา",zh:"藥",roman:"yaa"},{thai:"นา",zh:"田地",roman:"naa"},{thai:"ลา",zh:"驢子",roman:"laa"} ],
+            "單元九": [ {thai:"ทำไม",zh:"為什麼",roman:"tham-mai"},{thai:"ทีวี",zh:"電視",roman:"thee-wee"},{thai:"นาที",zh:"分鐘",roman:"naa-thee"},{thai:"ทะเล",zh:"海",roman:"tha-lee"},{thai:"เวลา",zh:"時間",roman:"wee-laa"},{thai:"價格",zh:"ราคา",roman:"raa-khaa"},{thai:"งา",zh:"象牙",roman:"ngaa"},{thai:"ซีดี",zh:"CD",roman:"see-dee"},{thai:"ชี",zh:"尼姑",roman:"chee"},{thai:"ริ",zh:"開始/創",roman:"ri"} ],
+            "單元十": [ {thai:"พอ",zh:"夠",roman:"pho"},{thai:"รอ",zh:"等",roman:"ro"},{thai:"ง้อ",zh:"求和",roman:"ngo"},{thai:"ย่อ",zh:"縮寫",roman:"yo"},{thai:"ท้อ",zh:"氣餒/退縮",roman:"tho"},{thai:"แท้",zh:"真/純正",roman:"thae"},{thai:"แวะ",zh:"順道拜訪",roman:"wae"},{thai:"เละ",zh:"爛/碎",roman:"le"},{thai:"แนะ",zh:"建議",roman:"nae"},{thai:"แพะ",zh:"山羊",roman:"phae"},{thai:"พ่อ",zh:"爸爸",roman:"pho"},{thai:"แม่",zh:"媽媽",roman:"mae"} ],
+            "單元十一": [ {thai:"ไหม",zh:"嗎",roman:"mai"},{thai:"อยู่",zh:"在",roman:"yuu"},{thai:"กับข้าว",zh:"飯菜",roman:"gap-khao"},{thai:"อร่อย",zh:"美味的",roman:"a-roi"},{thai:"มาก",zh:"很",roman:"maak"},{thai:"ตั้งใจ",zh:"打算",roman:"dtang-jai"},{thai:"นั้น",zh:"那",roman:"nan"},{thai:"ส่วน",zh:"至於",roman:"suan"},{thai:"ล่ะ",zh:"呢",roman:"la"},{thai:"โน้น",zh:"那(遠指)",roman:"non"},{thai:"หนู",zh:"我/你",roman:"nuu"},{thai:"ไหน",zh:"哪裡",roman:"nai"},{thai:"ญี่ปุ่น",zh:"日本",roman:"yip-bpun"},{thai:"เวียดนาม",zh:"越南",roman:"wiat-naam"},{thai:"อินโดนีเซีย",zh:"印尼",roman:"in-do-nee-sia"},{thai:"เกาหลี",zh:"韓國",roman:"gao-lee"},{thai:"ไหหลำ",zh:"海南",roman:"hai-lam"},{thai:"อาหรับ",zh:"阿拉伯",roman:"aa-rap"},{thai:"เสฉวน",zh:"四川",roman:"see-chuan"},{thai:"廣西",zh:"กวางสี",roman:"gwaang-see"},{thai:"เชียงใหม่",zh:"清邁",roman:"chiang-mai"},{thai:"廣州",zh:"กวางเจา",roman:"gwaang-jao"},{thai:"หอสมุด",zh:"圖書館",roman:"ho-sa-mut"},{thai:"ทาน",zh:"吃",roman:"thaan"},{thai:"อากาศ",zh:"天氣",roman:"aa-gaat"},{thai:"ผู้หญิง",zh:"女/女性",roman:"phuu-ying"},{thai:"ปีหน้า",zh:"明年",roman:"bpee-naa"},{thai:"今天",zh:"วันนี้",roman:"wan-nee"},{thai:"想",zh:"อยาก",roman:"yaak"},{thai:"什麼時候",zh:"เมื่อไร",roman:"muea-rai"},{thai:"讀/看",zh:"อ่าน",roman:"aan"},{thai:"別/勿",zh:"อย่า",roman:"yaa"},{thai:"電影",zh:"หนัง",roman:"nang"},{thai:"書",zh:"หนังสือ",roman:"nang-suee"},{thai:"教",zh:"สอน",roman:"son"},{thai:"電影院",zh:"โรงหนัง",roman:"rong-nang"},{thai:"多少",zh:"เท่าไร",roman:"thao-rai"},{thai:"作業",zh:"การบ้าน",roman:"gaan-baan"} ],
+            "單元十二": [ {thai:"เป็น",zh:"是",roman:"bpen"},{thai:"ยังไง",zh:"怎樣",roman:"yang-ngai"},{thai:"อย่างไร",zh:"怎樣",roman:"yaang-rai"},{thai:"สบาย",zh:"舒適",roman:"sa-baai"},{thai:"เรื่อย ๆ",zh:"就那樣",roman:"rueai-rueai"},{thai:"งั้น ๆ",zh:"就那樣",roman:"ngan-ngan"},{thai:"แหละ",zh:"語氣詞",roman:"lae"},{thai:"但",zh:"แต่",roman:"dtae"},{thai:"誰",zh:"ใคร",roman:"khrai"},{thai:"老師",zh:"ครู",roman:"khruu"},{thai:"朋友",zh:"เพื่อน",roman:"phuean"},{thai:"浪費/花費",zh:"เสีย",roman:"sia"},{thai:"所以/因此",zh:"จึง",roman:"jueng"},{thai:"努力",zh:"พยายาม",roman:"pha-yaa-yaam"},{thai:"鋼筆",zh:"ปากกา",roman:"bpaak-gaa"},{thai:"鉛筆",zh:"ดินสอ",roman:"din-so"},{thai:"稱作/叫做",zh:"เรียกว่า",roman:"riak-waa"},{thai:"本子",zh:"สมุด",roman:"sa-mut"},{thai:"忘記",zh:"ลืม",roman:"luem"},{thai:"拎包/袋子",zh:"กระเป๋า",roman:"gra-bpao"},{thai:"復習",zh:"ทบทวน",roman:"thop-thuan"},{thai:"黃瓜",zh:"แตงกวา",roman:"dtaeng-gwaa"},{thai:"西紅柿",zh:"มะเขือเทศ",roman:"ma-khuea-thet"},{thai:"國家",zh:"ประเทศ",roman:"bpra-thet"},{thai:"土豆",zh:"มันฝรั่ง",roman:"man-fa-rang"},{thai:"番石榴/西方人",zh:"ฝรั่ง",roman:"fa-rang"} ],
+            "單元十三": [ {thai:"ครอบครัว",zh:"家庭",roman:"khrop-khrua"},{thai:"นาน",zh:"久",roman:"naan"},{thai:"月份",zh:"เดือน",roman:"duean"},{thai:"下個月",zh:"เดือนหน้า",roman:"duean-naa"},{thai:"在...地方",zh:"ที่",roman:"thee"},{thai:"大學",zh:"มหาวิทยาลัย",roman:"ma-haa-wit-tha-yaa-lai"},{thai:"廣東",zh:"กวางตุ้ง",roman:"gwaang-dtung"},{thai:"自從",zh:"ตั้งแต่",roman:"dtang-dtae"},{thai:"九月份",zh:"กันยายน",roman:"gan-yaa-yon"},{thai:"旅遊",zh:"เที่ยว",roman:"thiao"},{thai:"臥室",zh:"ห้องนอน",roman:"hong-non"},{thai:"廚房",zh:"ห้องครัว",roman:"hong-khrua"},{thai:"市場",zh:"ตลาด",roman:"dta-laat"},{thai:"家",zh:"บ้าน",roman:"baan"},{thai:"所/量詞",zh:"แห่ง",roman:"haeng"},{thai:"商場",zh:"ห้าง",roman:"haang"},{thai:"一會兒",zh:"เดี๋ยวนี้",roman:"diao-nee"},{thai:"水果",zh:"ผลไม้",roman:"phon-la-mai"},{thai:"下周",zh:"สัปดาห์หน้า",roman:"sap-daa-naa"},{thai:"明天",zh:"พรุ่งนี้",roman:"phrung-nee"},{thai:"新的",zh:"ใหม่",roman:"mai"},{thai:"學期",zh:"เทอม",roman:"thoem"},{thai:"開",zh:"เปิด",roman:"bpoet"},{thai:"昨天",zh:"เมื่อวาน",roman:"muea-waan"},{thai:"考試",zh:"สอบ",roman:"sop"} ],
+            "單元十四": [ {thai:"ของ",zh:"的(表所屬)",roman:"khong"},{thai:"或者",zh:"หรือ",roman:"ruee"},{thai:"老師",zh:"อาจารย์",roman:"aa-jaan"},{thai:"幾乎",zh:"เกือบ",roman:"gueap"},{thai:"回",zh:"กลับ",roman:"glap"},{thai:"星期",zh:"อาทิตย์",roman:"aa-thit"},{thai:"走路/旅行",zh:"เดินทาง",roman:"doen-thaang"},{thai:"平安地",zh:"โดยปลอดภัย",roman:"doi-bplot-phai"},{thai:"要/請求",zh:"ขอ",roman:"kho"},{thai:"希望",zh:"ขอให้",roman:"kho-hai"},{thai:"估計/想",zh:"คิดว่า",roman:"khit-waa"},{thai:"再",zh:"อีก",roman:"eek"},{thai:"當然",zh:"แน่นอน",roman:"nae-non"},{thai:"托付",zh:"ฝาก",roman:"faak"},{thai:"想念",zh:"ความระลึกถึง",roman:"khwaam-ra-luek-thueng"},{thai:"到",zh:"ถึง",roman:"thueng"},{thai:"也",zh:"ด้วย",roman:"duai"},{thai:"覺得",zh:"รู้สึก",roman:"ruu-suek"},{thai:"餓",zh:"หิว",roman:"hiw"},{thai:"口渴",zh:"หิวน้ำ",roman:"hiw-nam"},{thai:"炒",zh:"ผัด",roman:"phat"},{thai:"金不換",zh:"กะเพรา",roman:"ga-phrao"},{thai:"份",zh:"ที่",roman:"thee"},{thai:"濕炒河粉",zh:"ราดหน้าเส้นใหญ่",roman:"raat-naa-sen-yai"},{thai:"豬",zh:"หมู",roman:"muu"},{thai:"蝦",zh:"กุ้ง",roman:"gung"},{thai:"幫助",zh:"幫助",roman:"chuai"},{thai:"送",zh:"ส่ง",roman:"song"},{thai:"魚露",zh:"น้ำปลา",roman:"nam-bplaa"},{thai:"一下",zh:"หน่อย",roman:"noi"},{thai:"提/拎",zh:"ถือ",roman:"thuee"},{thai:"拿",zh:"หยิบ",roman:"yip"},{thai:"記錄",zh:"จด",roman:"jot"},{thai:"錢",zh:"เงิน",roman:"ngoen"},{thai:"泰銖",zh:"บาท",roman:"baat"},{thai:"信件",zh:"จดหมาย",roman:"jot-maai"},{thai:"寫",zh:"เขียน",roman:"khian"},{thai:"擔心",zh:"เป็นห่วง",roman:"bpen-huang"},{thai:"炒飯",zh:"ข้าวผัด",roman:"khao-phat"} ],
+            "單元十五": [ {thai:"เป็นอะไรไป",zh:"怎麼了",roman:"bpen-a-rai-bpai"},{thai:"一些",zh:"มั่ง/บ้าง",roman:"mang/baang"},{thai:"本(量詞)",zh:"เล่ม",roman:"lem"},{thai:"緊挨",zh:"ติดกับ",roman:"dtit-gap"},{thai:"住/休息",zh:"พัก",roman:"phak"},{thai:"告訴",zh:"บอก",roman:"bok"},{thai:"客氣",zh:"เกรงใจ",roman:"greeng-jai"},{thai:"再過……",zh:"อีก",roman:"eek"},{thai:"多點",zh:"กว่า",roman:"gwaa"},{thai:"車",zh:"รถ",roman:"rot"},{thai:"出",zh:"ออก",roman:"ok"},{thai:"幾點",zh:"กี่โมง",roman:"gee-mong"},{thai:"分鐘",zh:"นาที",roman:"naa-thee"},{thai:"斤",zh:"ชั่ง",roman:"chang"},{thai:"包括",zh:"รวม",roman:"ruam"},{thai:"跟著",zh:"ตาม",roman:"dtaam"},{thai:"齊/準備好",zh:"พร้อม",roman:"phrom"},{thai:"然後再",zh:"แล้วค่อย",roman:"laeo-khoi"},{thai:"先",zh:"ก่อน",roman:"gon"},{thai:"語氣詞",zh:"สิ/ซิ",roman:"si"},{thai:"一點",zh:"นิด",roman:"nit"},{thai:"大聲",zh:"ดัง",roman:"dang"},{thai:"翻譯",zh:"แปล",roman:"bplae"},{thai:"沒/盡",zh:"หมด",roman:"mot"},{thai:"還",zh:"ยัง",roman:"yang"},{thai:"天",zh:"วัน",roman:"wan"},{thai:"見面",zh:"พบกัน",roman:"phop-gan"},{thai:"許可",zh:"อนุญาต",roman:"a-nu-yaat"},{thai:"再次",zh:"ใหม่",roman:"mai"},{thai:"順便",zh:"แวะ",roman:"wae"},{thai:"遲",zh:"สาย",roman:"saai"},{thai:"看病",zh:"หาหมอ",roman:"haa-mo"},{thai:"醫生",zh:"หมอ",roman:"mo"},{thai:"今後",zh:"ทีหน้าทีหลัง",roman:"thee-naa-thee-lang"},{thai:"醫院",zh:"โรงพยาบาล",roman:"rong-pha-yaa-baan"},{thai:"發音",zh:"ออกเสียง",roman:"ok-siang"},{thai:"請",zh:"請",roman:"choen"},{thai:"很",zh:"ดี",roman:"dee"},{thai:"清楚",zh:"ชัด",roman:"chat"},{thai:"句子",zh:"ประโยค",roman:"bpra-yok"},{thai:"流利",zh:"คล่อง",roman:"khlong"},{thai:"次",zh:"ที",roman:"thee"},{thai:"造句",zh:"แต่งประโยค",roman:"dtaeng-bpra-yok"},{thai:"正確",zh:"ถูกต้อง",roman:"thuuk-dtong"},{thai:"錯誤",zh:"ผิด",roman:"phit"} ]
         };
 
-        const midConsonants = [{char:"ก",name:"ก ไก่ (gai)"},{char:"จ",name:"จ จาน (jaan)"},{char:"ด",name:"ด เด็ก (dek)"},{char:"ต",name:"ต เต่า (tao)"},{char:"ฎ",name:"ฎ ชฎา"},{char:"ฏ",name:"ฏ ปฏัก"},{char:"บ",name:"บ ใบไม้"},{char:"ป",name:"ป ปลา"},{char:"อ",name:"อ อ่าง"}];
+        const midConsonants = [{char:"ก",name:"ก ไก่ (gai)"},{char:"จ",name:"จ จาน"},{char:"ด",name:"ด เด็ก"},{char:"ต",name:"ต เต่า"},{char:"ฎ",name:"ฎ ชฎา"},{char:"ฏ",name:"ฏ ปฏัก"},{char:"บ",name:"บ ใบไม้"},{char:"ป",name:"ป ปลา"},{char:"อ",name:"อ อ่าง"}];
         const highConsonants = [{char:"ข",name:"ข ไข่"},{char:"ฃ",name:"ฃ ขวด"},{char:"ฉ",name:"ฉ ฉิ่ง"},{char:"ฐ",name:"ฐ ฐาน"},{char:"ถ",name:"ถ ถุง"},{char:"ผ",name:"ผ ผึ้ง"},{char:"ฝ",name:"ฝ ฝา"},{char:"ศ",name:"ศ ศาลา"},{char:"ษ",name:"ษ ฤๅษี"},{char:"ส",name:"ส เสือ"},{char:"ห",name:"ห หีบ"}];
         const lowConsonants = [{char:"ค",name:"ค ควาย"},{char:"ง",name:"ง งู"},{char:"ช",name:"ช ช้าง"},{char:"ซ",name:"ซ โซ่"},{char:"ญ",name:"ญ หญิง"},{char:"ท",name:"ท ทหาร"},{char:"น",name:"น หนู"},{char:"พ",name:"พ พาน"},{char:"ฟ",name:"ฟ ฟัน"},{char:"ม",name:"ม ม้า"},{char:"ย",name:"ย ยักษ์"},{char:"ร",name:"ร เรือ"},{char:"ล",name:"ล ลิง"},{char:"ว",name:"ว แหวน"},{char:"ฮ",name:"ฮ นกฮูก"}];
         const allVowels = [{char:"อะ",name:"a"},{char:"อา",name:"aa"},{char:"อิ",name:"i"},{char:"อี",name:"ee"},{char:"อึ",name:"ue"},{char:"อื",name:"uee"},{char:"อุ",name:"u"},{char:"อู",name:"uu"},{char:"เอะ",name:"e"},{char:"เอ",name:"ee"},{char:"แอะ",name:"ae"},{char:"แอ",name:"aee"},{char:"โอะ",name:"o"},{char:"โอ",name:"oo"},{char:"เอาะ",name:"or"},{char:"ออ",name:"oor"},{char:"อำ",name:"am"},{char:"ใอ",name:"ai"},{char:"ไอ",name:"ai"},{char:"เอา",name:"ao"}];
         const allLettersForWriting = [...midConsonants, ...highConsonants, ...lowConsonants, ...allVowels];
 
-        let spellSelectedUnits = new Set(["單元一"]); 
-        let listenSelectedUnits = new Set(["單元一"]);
-        let activeSpellVocab = [];
-        let activeListenVocab = [];
-        let mistakeBook = JSON.parse(localStorage.getItem('thaiMistakes')) || {};
+        let spellSelectedUnits = new Set(["單元一"]); let listenSelectedUnits = new Set(["單元一"]);
+        let activeSpellVocab = []; let activeListenVocab = []; let mistakeBook = JSON.parse(localStorage.getItem('thaiMistakes')) || {};
 
-        function speakThai(text) { if ('speechSynthesis' in window) { const utterance = new SpeechSynthesisUtterance(text); utterance.lang = 'th-TH'; utterance.rate = 0.8; window.speechSynthesis.speak(utterance); } }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-            if(tabId === 'mistakes-book') renderMistakes();
-        }
-
-        function initScopeToggle(containerId, selectedSet, updateCallback) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = ''; 
-            for (let unit in unitData) {
-                const btn = document.createElement('div');
-                btn.className = 'scope-label ' + (selectedSet.has(unit) ? 'active' : '');
-                btn.innerText = unit.replace('單元', ''); 
-                btn.onclick = () => {
-                    if (selectedSet.has(unit)) { selectedSet.delete(unit); btn.classList.remove('active'); } 
-                    else { selectedSet.add(unit); btn.classList.add('active'); }
-                    updateCallback();
-                };
-                container.appendChild(btn);
-            }
-        }
-
-        function updateSpellScope() {
-            activeSpellVocab = [];
-            spellSelectedUnits.forEach(u => activeSpellVocab = activeSpellVocab.concat(unitData[u]));
-            if (activeSpellVocab.length > 0) nextQuestion();
-        }
-
-        function updateListenScope() {
-            activeListenVocab = [];
-            listenSelectedUnits.forEach(u => activeListenVocab = activeListenVocab.concat(unitData[u]));
-            if (activeListenVocab.length > 0) nextListeningQuestion();
-        }
-
+        function speakThai(t) { if('speechSynthesis' in window) { const u=new SpeechSynthesisUtterance(t); u.lang='th-TH'; u.rate=0.8; window.speechSynthesis.speak(u); } }
+        function switchTab(id) { document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.getElementById(id).classList.add('active'); event.currentTarget.classList.add('active'); if(id==='mistakes-book') renderMistakes(); }
+        function initScopeToggle(id, set, cb) { const c=document.getElementById(id); c.innerHTML=''; for(let u in unitData) { const b=document.createElement('div'); b.className='scope-label '+(set.has(u)?'active':''); b.innerText=u.replace('單元',''); b.onclick=()=>{ if(set.has(u)) set.delete(u); else set.add(u); b.classList.toggle('active'); cb(); }; c.appendChild(b); } }
+        function updateSpellScope() { activeSpellVocab=[]; spellSelectedUnits.forEach(u=>activeSpellVocab=activeSpellVocab.concat(unitData[u])); if(activeSpellVocab.length>0) nextQuestion(); }
+        function updateListenScope() { activeListenVocab=[]; listenSelectedUnits.forEach(u=>activeListenVocab=activeListenVocab.concat(unitData[u])); if(activeListenVocab.length>0) nextListeningQuestion(); }
         function saveMistakes() { localStorage.setItem('thaiMistakes', JSON.stringify(mistakeBook)); }
-        
-        function recordAnswer(wordObj, isCorrect) {
-            const wordKey = wordObj.thai;
-            if (isCorrect) {
-                if (mistakeBook[wordKey]) {
-                    mistakeBook[wordKey].streak += 1;
-                    if (mistakeBook[wordKey].streak >= 5) delete mistakeBook[wordKey];
-                    saveMistakes();
-                }
-            } else {
-                if (!mistakeBook[wordKey]) mistakeBook[wordKey] = { ...wordObj, streak: 0 };
-                else mistakeBook[wordKey].streak = 0; 
-                saveMistakes();
-            }
-        }
+        function recordAnswer(obj, corr) { const k=obj.thai; if(corr) { if(mistakeBook[k]) { mistakeBook[k].streak++; if(mistakeBook[k].streak>=5) delete mistakeBook[k]; saveMistakes(); } } else { if(!mistakeBook[k]) mistakeBook[k]={...obj,streak:0}; else mistakeBook[k].streak=0; saveMistakes(); } }
+        function renderMistakes() { const d=document.getElementById('mistake-display-area'); d.innerHTML=''; const ks=Object.keys(mistakeBook); if(ks.length===0) { d.innerHTML='<div style="color:var(--success); padding:20px;">🎉 目前沒有錯題！</div>'; return; } const g=document.createElement('div'); g.className='mistake-grid'; ks.forEach(k=>{ const w=mistakeBook[k]; g.innerHTML+=`<div class="vocab-item" style="background:white; padding:10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border-left:4px solid var(--danger);"><div><b style="font-size:1.2em; color:var(--danger);">${w.thai}</b><br><small>${w.zh} [${w.streak}/5]</small></div><button class="speak-btn" onclick="speakThai('${w.thai}')">🔊</button></div>`; }); d.appendChild(g); }
 
-        function renderMistakes() {
-            const display = document.getElementById('mistake-display-area');
-            display.innerHTML = '';
-            const keys = Object.keys(mistakeBook);
-            if(keys.length === 0) { display.innerHTML = '<div style="color:var(--success); padding:20px;">🎉 目前沒有錯題！</div>'; return; }
-            const grid = document.createElement('div'); grid.className = 'mistake-grid';
-            keys.forEach(k => {
-                const w = mistakeBook[k];
-                grid.innerHTML += `<div class="mistake-item" style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:8px; border-left:4px solid var(--danger); box-shadow:0 2px 5px rgba(0,0,0,0.1);">
-                    <div><b style="font-size:1.4em; color:var(--danger)">${w.thai}</b><br><span style="font-size:0.8em; color:#666;">${w.zh} [${w.streak}/5]</span></div>
-                    <button class="speak-btn" onclick="speakThai('${w.thai}')">🔊</button>
-                </div>`;
-            });
-            display.appendChild(grid);
-        }
-
-        let spellCurrent = {}; let spellQType = 'thai'; let sScore = { c:0, w:0 };
-        function nextQuestion() {
-            if(activeSpellVocab.length === 0) return;
-            spellCurrent = activeSpellVocab[Math.floor(Math.random() * activeSpellVocab.length)];
-            spellQType = Math.random() > 0.5 ? 'thai' : 'zh';
-            document.getElementById('quiz-question').innerText = spellCurrent[spellQType];
-            document.getElementById('quiz-hint').innerText = `請輸入${spellQType === 'thai' ? '中文' : '泰文'}`;
-            document.getElementById('quiz-input').value = ''; document.getElementById('feedback').innerText = '';
-        }
+        let spellCurrent={}, spellQType='thai', sScore={c:0,w:0};
+        function nextQuestion() { if(activeSpellVocab.length===0) return; spellCurrent=activeSpellVocab[Math.floor(Math.random()*activeSpellVocab.length)]; spellQType=Math.random()>0.5?'thai':'zh'; document.getElementById('quiz-question').innerText=spellCurrent[spellQType]; document.getElementById('quiz-hint').innerText=`請輸入${spellQType==='thai'?'中文':'泰文'}`; document.getElementById('quiz-input').value=''; document.getElementById('feedback').innerText=''; }
         function speakQuizWord() { speakThai(spellCurrent.thai); }
-        function checkAnswer() {
-            const input = document.getElementById('quiz-input').value.trim();
-            const ans = spellQType === 'thai' ? spellCurrent.zh : spellCurrent.thai;
-            let isCorrect = (input === ans);
-            if (!isCorrect && spellQType === 'thai' && spellCurrent.zh.includes('/')) {
-                isCorrect = spellCurrent.zh.split('/').map(s => s.trim()).includes(input);
-            }
-            if (!isCorrect && spellQType === 'thai' && spellCurrent.zh.includes('、')) {
-                isCorrect = spellCurrent.zh.split('、').map(s => s.trim()).includes(input);
-            }
-            const fb = document.getElementById('feedback');
-            if (isCorrect) {
-                fb.innerHTML = `✅ 答對了！<br><span style="color:var(--primary); font-size:1.2em;">${spellCurrent.thai}</span> (${spellCurrent.zh} [${spellCurrent.roman}])`; 
-                fb.style.color = "var(--success)";
-                sScore.c++; recordAnswer(spellCurrent, true); setTimeout(nextQuestion, 1200);
-            } else {
-                fb.innerHTML = `❌ 正确答案：<br><span style="color:var(--primary); font-size:1.2em;">${spellCurrent.thai}</span> (${spellCurrent.zh} [${spellCurrent.roman}])`; 
-                fb.style.color = "var(--danger)";
-                sScore.w++; recordAnswer(spellCurrent, false);
-            }
-            document.getElementById('spell-correct').innerText = sScore.c; document.getElementById('spell-wrong').innerText = sScore.w;
-        }
+        function checkAnswer() { const input=document.getElementById('quiz-input').value.trim(); const ans=spellQType==='thai'?spellCurrent.zh:spellCurrent.thai; let isCorr=(input===ans); if(!isCorr && spellQType==='thai') { if(spellCurrent.zh.includes('/')) isCorr=spellCurrent.zh.split('/').map(s=>s.trim()).includes(input); if(!isCorr && spellCurrent.zh.includes('、')) isCorr=spellCurrent.zh.split('、').map(s=>s.trim()).includes(input); } const fb=document.getElementById('feedback'); if(isCorr) { fb.innerHTML=`✅ 對了！<br><span style="color:var(--primary); font-size:1.2em;">${spellCurrent.thai}</span> (${spellCurrent.zh})`; fb.style.color="var(--success)"; sScore.c++; recordAnswer(spellCurrent,true); setTimeout(nextQuestion,1200); } else { fb.innerHTML=`❌ 正確：<br><span style="color:var(--primary); font-size:1.2em;">${spellCurrent.thai}</span> (${spellCurrent.zh})`; fb.style.color="var(--danger)"; sScore.w++; recordAnswer(spellCurrent,false); } document.getElementById('spell-correct').innerText=sScore.c; document.getElementById('spell-wrong').innerText=sScore.w; }
         function handleEnter(e) { if(e.key==='Enter') { checkAnswer(); document.activeElement.blur(); } }
 
-        let listenCurrent = {}; let lScore = { c:0, w:0 };
-        function nextListeningQuestion() {
-            if(activeListenVocab.length===0) return;
-            document.getElementById('listening-feedback').innerText = '';
-            const container = document.getElementById('listening-options'); container.innerHTML = '';
-            listenCurrent = activeListenVocab[Math.floor(Math.random() * activeListenVocab.length)];
-            let opts = [listenCurrent];
-            while(opts.length < Math.min(4, activeListenVocab.length)) {
-                let r = activeListenVocab[Math.floor(Math.random() * activeListenVocab.length)];
-                if(!opts.includes(r)) opts.push(r);
-            }
-            opts.sort(()=>Math.random()-0.5).forEach(o => {
-                const b = document.createElement('button'); b.className='mcq-btn'; b.innerText=o.zh;
-                b.onclick = () => {
-                    document.querySelectorAll('.mcq-btn').forEach(btn=>btn.disabled=true);
-                    const fb = document.getElementById('listening-feedback');
-                    if(o.thai === listenCurrent.thai) {
-                        fb.innerHTML = `✅ 答對了！<br><span style="color:var(--primary); font-size:1.2em;">${listenCurrent.thai}</span> (${listenCurrent.zh} [${listenCurrent.roman}])`; 
-                        fb.style.color = "var(--success)";
-                        b.style.background="var(--success)"; b.style.color="white"; lScore.c++; recordAnswer(listenCurrent, true); setTimeout(nextListeningQuestion, 1500);
-                    } else {
-                        fb.innerHTML = `❌ 正确答案：<br><span style="color:var(--primary); font-size:1.2em;">${listenCurrent.thai}</span> (${listenCurrent.zh} [${listenCurrent.roman}])`; 
-                        fb.style.color = "var(--danger)";
-                        b.style.background="var(--danger)"; b.style.color="white"; lScore.w++; recordAnswer(listenCurrent, false);
-                    }
-                    document.getElementById('listen-correct').innerText = lScore.c; document.getElementById('listen-wrong').innerText = lScore.w;
-                };
-                container.appendChild(b);
-            });
-        }
+        let listenCurrent={}, lScore={c:0,w:0};
+        function nextListeningQuestion() { if(activeListenVocab.length===0) return; document.getElementById('listening-feedback').innerText=''; const c=document.getElementById('listening-options'); c.innerHTML=''; listenCurrent=activeListenVocab[Math.floor(Math.random()*activeListenVocab.length)]; let opts=[listenCurrent]; while(opts.length<Math.min(4,activeListenVocab.length)) { let r=activeListenVocab[Math.floor(Math.random()*activeListenVocab.length)]; if(!opts.includes(r)) opts.push(r); } opts.sort(()=>Math.random()-0.5).forEach(o=>{ const b=document.createElement('button'); b.className='mcq-btn'; b.innerText=o.zh; b.onclick=()=>{ document.querySelectorAll('.mcq-btn').forEach(btn=>btn.disabled=true); const fb=document.getElementById('listening-feedback'); if(o.thai===listenCurrent.thai) { fb.innerHTML=`✅ 對了！<br>${listenCurrent.thai} (${listenCurrent.zh})`; fb.style.color="var(--success)"; b.style.background="var(--success)"; b.style.color="white"; lScore.c++; recordAnswer(listenCurrent,true); setTimeout(nextListeningQuestion,1500); } else { fb.innerHTML=`❌ 正確：<br>${listenCurrent.thai} (${listenCurrent.zh})`; fb.style.color="var(--danger)"; b.style.background="var(--danger)"; b.style.color="white"; lScore.w++; recordAnswer(listenCurrent,false); } document.getElementById('listen-correct').innerText=lScore.c; document.getElementById('listen-wrong').innerText=lScore.w; }; c.appendChild(b); }); }
         function playListeningAudio() { if(activeListenVocab.length>0) speakThai(listenCurrent.thai); }
 
-        const canvas = document.getElementById('drawingBoard'); const ctx = canvas.getContext('2d');
-        let isDrawing = false; let currentWriteTarget = null; let traceMode = true;
-        function drawTrace() { ctx.clearRect(0, 0, canvas.width, canvas.height); if (traceMode && currentWriteTarget) { ctx.font = "200px 'Leelawadee UI'"; ctx.fillStyle = "rgba(200, 200, 200, 0.3)"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(currentWriteTarget.char, canvas.width/2, canvas.height/2); } }
-        function toggleTraceMode() { traceMode = !traceMode; document.getElementById('trace-btn').innerText = traceMode ? "👁️ 底字:開" : "🙈 底字:關"; drawTrace(); }
-        function nextWritingPrompt() { currentWriteTarget = allLettersForWriting[Math.floor(Math.random() * allLettersForWriting.length)]; document.getElementById('tutorial-thai').innerText = currentWriteTarget.char; document.getElementById('tutorial-zh').innerText = currentWriteTarget.name; drawTrace(); }
+        const canvas=document.getElementById('drawingBoard'); const ctx=canvas.getContext('2d'); let isDrawing=false, currentWriteTarget=null, traceMode=true;
+        function drawTrace() { ctx.clearRect(0,0,canvas.width,canvas.height); if(traceMode && currentWriteTarget) { ctx.font="200px 'Leelawadee UI'"; ctx.fillStyle="rgba(200,200,200,0.3)"; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText(currentWriteTarget.char, canvas.width/2, canvas.height/2); } }
+        function toggleTraceMode() { traceMode=!traceMode; document.getElementById('trace-btn').innerText=traceMode?"👁️ 底字:開":"🙈 底字:關"; drawTrace(); }
+        function nextWritingPrompt() { currentWriteTarget=allLettersForWriting[Math.floor(Math.random()*allLettersForWriting.length)]; document.getElementById('tutorial-thai').innerText=currentWriteTarget.char; document.getElementById('tutorial-zh').innerText=currentWriteTarget.name||''; drawTrace(); }
         function clearCanvas() { drawTrace(); }
-        function getPos(e) { const r=canvas.getBoundingClientRect(); const cx = e.clientX || e.touches[0].clientX; const cy = e.clientY || e.touches[0].clientY; return {x:cx-r.left, y:cy-r.top}; }
-        canvas.addEventListener('touchstart', e=>{e.preventDefault(); isDrawing=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y);},{passive:false});
-        canvas.addEventListener('touchmove', e=>{if(!isDrawing)return; e.preventDefault(); const p=getPos(e); ctx.lineTo(p.x, p.y); ctx.strokeStyle='#2c3e50'; ctx.lineWidth=6; ctx.lineCap='round'; ctx.stroke();},{passive:false});
+        function getPos(e) { const r=canvas.getBoundingClientRect(); const cx=e.clientX||e.touches[0].clientX; const cy=e.clientY||e.touches[0].clientY; return {x:cx-r.left, y:cy-r.top}; }
+        canvas.addEventListener('touchstart', e=>{e.preventDefault(); isDrawing=true; const p=getPos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y);},{passive:false});
+        canvas.addEventListener('touchmove', e=>{if(!isDrawing)return; e.preventDefault(); const p=getPos(e); ctx.lineTo(p.x,p.y); ctx.strokeStyle='#2c3e50'; ctx.lineWidth=6; ctx.lineCap='round'; ctx.stroke();},{passive:false});
         canvas.addEventListener('touchend', ()=>isDrawing=false);
 
-        function populateTable(id, data) { const t = document.getElementById(id); data.forEach(item => { const row = t.insertRow(); row.innerHTML = `<td style="font-size:1.5em; color:var(--primary)">${item.char}</td><td>${item.name}</td><td><button class="speak-btn" onclick="speakThai('${item.char}')">🔊</button></td>`; }); }
+        function populateTable(id, data) { const t=document.getElementById(id); data.forEach(i=>{ const r=t.insertRow(); r.innerHTML=`<td style="font-size:1.5em; color:var(--primary)">${i.char}</td><td>${i.name||''}</td><td><button class="speak-btn" onclick="speakThai('${i.char}')">🔊</button></td>`; }); }
 
-        window.onload = () => {
+        window.onload=()=>{
             initScopeToggle('spell-scope-toggles', spellSelectedUnits, updateSpellScope);
             initScopeToggle('listen-scope-toggles', listenSelectedUnits, updateListenScope);
             updateSpellScope(); updateListenScope(); nextWritingPrompt();
-            const ub = document.getElementById('unit-btn-container');
-            for(let u in unitData){
-                let btn = document.createElement('button'); btn.className='unit-btn'; btn.innerText=u;
-                btn.onclick=()=>{ document.querySelectorAll('.unit-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const d=document.getElementById('unit-vocab-display'); d.innerHTML=''; unitData[u].forEach(w=>d.innerHTML+=`<div class="vocab-item" style="background:white; padding:10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;"><div><b style="font-size:1.4em; color:var(--primary);">${w.thai}</b><br><small style="color:#666;">${w.zh} [${w.roman}]</small></div><button class="speak-btn" onclick="speakThai('${w.thai}')">🔊</button></div>`); }; ub.appendChild(btn);
-            }
-            populateTable('mid-cons-table', midConsonants);
+            const ub=document.getElementById('unit-btn-container');
+            for(let u in unitData) { const btn=document.createElement('button'); btn.className='unit-btn'; btn.innerText=u; btn.onclick=()=>{ document.querySelectorAll('.unit-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); const d=document.getElementById('unit-vocab-display'); d.innerHTML=''; unitData[u].forEach(w=>d.innerHTML+=`<div class="vocab-item" style="background:white; padding:10px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;"><div><b style="font-size:1.4em; color:var(--primary);">${w.thai}</b><br><small>${w.zh} [${w.roman}]</small></div><button class="speak-btn" onclick="speakThai('${w.thai}')">🔊</button></div>`); }; ub.appendChild(btn); }
+            populateTable('mid-cons-table', midConsonants); populateTable('high-cons-table', highConsonants); populateTable('low-cons-table', lowConsonants); populateTable('vowel-table', allVowels);
+        };
+    </script>
+</body>
+</html>
